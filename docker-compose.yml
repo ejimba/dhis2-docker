@@ -1,0 +1,45 @@
+version: '3.1'
+services:
+  dhis2:
+    container_name: dhis2
+    environment:
+      DHIS2_HOME: /DHIS2_home
+      JAVA_OPTS: -Xms2048m -Xmx4096m
+      TZ: Africa/Nairobi
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: dhis2
+      POSTGRES_USER: dhis
+      POSTGRES_PASSWORD: dhis
+      SERVER_HTTPS: off
+      SERVER_BASE_URL: http://localhost:8080
+    depends_on:
+      - postgres
+    image: dhis2/core:2.40.2
+    networks:
+      - dhis2
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    volumes:
+      - ./data/dhis:/DHIS2_home
+
+  postgres:
+    container_name: postgres
+    environment:
+      POSTGRES_DB: dhis2
+      POSTGRES_USER: dhis
+      POSTGRES_PASSWORD: dhis
+    image: postgis/postgis:15-3.4
+    networks:
+      - dhis2
+    # ports:
+    #   - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+networks:
+  dhis2:
+    driver: bridge
+    name: dhis2
