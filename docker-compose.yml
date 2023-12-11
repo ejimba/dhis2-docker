@@ -1,6 +1,9 @@
 version: '3.1'
 services:
   dhis2:
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: dhis2
     environment:
       DHIS2_HOME: /DHIS2_home
@@ -15,7 +18,6 @@ services:
       SERVER_BASE_URL: http://localhost:8080
     depends_on:
       - postgres
-    image: dhis2/core:2.40.2
     networks:
       - dhis2
     ports:
