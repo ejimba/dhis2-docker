@@ -17,6 +17,7 @@ services:
     image: dhis2/core:2.41.0.0
     networks:
       - dhis2
+    platform: linux/amd64
     ports:
       - 8080:8080
     restart: unless-stopped
