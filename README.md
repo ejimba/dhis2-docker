@@ -1,6 +1,6 @@
 # DHIS2 Docker Project
 
-This project sets up a DHIS2 instance with a Postgres database using Docker.
+This project sets up a DHIS2 instance with a Postgres database using Docker. If you require SSL certificates, please use [this version](https://github.com/ejimba/dhis2-docker-letsencrypt)
 
 ## Project Structure
 

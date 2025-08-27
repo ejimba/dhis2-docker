@@ -1,4 +1,12 @@
 services:
+  dhis2-init:
+    container_name: dhis2-init
+    image: busybox:latest
+    command: ["sh", "-c", "chown -R nobody:nobody /DHIS2_home"]
+    volumes:
+      - ./data/dhis:/DHIS2_home
+    restart: no
+
   dhis2:
     container_name: dhis2
     environment:
@@ -13,6 +21,7 @@ services:
       SERVER_HTTPS: "off"
       SERVER_BASE_URL: http://localhost:8080
     depends_on:
+      - dhis2-init
       - postgres
     image: dhis2/core:2.42
     networks:
@@ -23,7 +32,6 @@ services:
     restart: unless-stopped
     volumes:
       - ./data/dhis:/DHIS2_home
-      - ./data/dhis/dhis.conf:/opt/dhis2/dhis.conf # Ensure the correct path to dhis.conf
 
   postgres:
     container_name: postgres
